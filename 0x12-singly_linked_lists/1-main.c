@@ -1,47 +1,34 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h> // Add this line to include the <string.h> header
+#include <string.h>
+#include <stdio.h>
 #include "lists.h"
 
-list_t *create_node(const char *str)
-{
-    list_t *new_node = malloc(sizeof(list_t));
-    if (new_node)
-    {
-        new_node->str = strdup(str);
-        new_node->next = NULL;
-    }
-    return new_node;
-}
-
-void free_list(list_t *head)
-{
-    list_t *temp;
-    while (head != NULL)
-    {
-        temp = head;
-        head = head->next;
-        free(temp->str);
-        free(temp);
-    }
-}
-
+/**
+ * main - check the code
+ *
+ * Return: Always 0.
+ */
 int main(void)
 {
-    list_t *head = NULL;
-    list_t *node1 = create_node("Hello");
-    list_t *node2 = create_node("World");
-    list_t *node3 = create_node("!");
+    list_t *head;
+    list_t *new;
+    list_t hello = {"World", 5, NULL};
+    size_t n;
 
-    head = node1;
-    node1->next = node2;
-    node2->next = node3;
-
-    size_t len = list_len(head);
-    printf("Number of elements in the linked list: %zu\n", len);
-
-    free_list(head);
-
-    return 0;
+    head = &hello;
+    new = malloc(sizeof(list_t));
+    if (new == NULL)
+    {
+        printf("Error\n");
+        return (1);
+    }
+    new->str = strdup("Hello");
+    new->len = 5;
+    new->next = head;
+    head = new;
+    n = list_len(head);
+    printf("-> %lu elements\n", n);
+    free(new->str);
+    free(new);
+    return (0);
 }
-
